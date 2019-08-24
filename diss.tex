@@ -1,0 +1,279 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%            LMU-Vorlage              %%
+%%                                     %%
+%%         zur Erstellung einer        %%
+%%   Dissertation mit pdflatex/latex   %%
+%%                                     %%
+%%  (2002) Robert Dahlke               %%
+%%         & Sigmund Stintzing         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, twoside, a4paper]{scrbook}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Zusaetzliche Pakete  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{a4wide}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[numbers]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{nomencl}
+\usepackage[bf, small, sf]{caption}
+%\usepackage{german}
+\usepackage[pdftex,bookmarks]{hyperref}
+\usepackage{exscale}
+
+\newcommand{\EQ}[1]{Eq.~(\ref{eq:#1})}
+\newcommand{\SEC}[1]{Sec.~\ref{sec:#1}}
+\newcommand{\APP}[1]{Appendix \ref{app:#1}}
+\newcommand{\EQS}[2]{Eqs.~(\ref{eq:#1)} and (\ref{eq:#2})}
+\newcommand{\FIG}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\REF}[1]{ref.~\citep{#1}}
+\newcommand{\FIGPATH}{/Users/neher/Documents/Sandboxes/Dissertation}
+\newcommand{\smallfigure}{0.6\columnwidth}
+\newcommand{\largefigure}{0.9\columnwidth}
+\newcommand{\halffigure}{0.4\columnwidth}
+
+%%UNITS
+\newcommand{\kT}{k_BT}
+\newcommand{\Ang}{\rm{\AA}}
+\newcommand{\nm}{\mathrm{nm}}
+\newcommand{\Celsius}{{}^{\circ}\mathrm{C}}  %degree Celsius
+\newcommand{\pN}{\rm pN}
+
+%%POLYMER AND NUCLEOSOME QUANTITIES
+\newcommand{\lp}{{\ell_p}}		%persistence length
+\newcommand{\lc}{{l_c}}		%crossover length during barrier crossing
+\newcommand{\rvec}{{\bf r}}        % bead position
+\newcommand{\cvec}{{\bf c}}        % contact point position
+\newcommand{\chainstiff}{\varepsilon_{\rm s}}  % stretching stiffness
+\newcommand{\bendstiff}{\varepsilon_{\rm b}}   % bending stiffness
+\newcommand{\UDH}{U_{\rm DH}}      % screened electrostatic interaction
+\newcommand{\Uc}{U_{\rm c}}        % contact potential
+\newcommand{\basepair}[1]{\texttt{#1}}
+
+%%Two Segment Rotor quantities
+\newcommand{\pr}{{\varphi_r}}     %relativ winkel
+\newcommand{\p}{{\varphi_1}}		% winkel des ersten segments
+\newcommand{\pz}{{\varphi_2}}		% winkel des zweiten segments
+\newcommand{\Mob}{\mathbf{M}}         
+\newcommand{\Mobc}{M}
+\newcommand{\UHess}{\mathbf{E}}
+\newcommand{\UHessc}{E}
+\newcommand{\redUHess}{\mathbf{\hat{E}}}
+\newcommand{\redUHessc}{\hat{E}}
+\newcommand{\Sep}{\mathbf{U}}
+\newcommand{\Sepc}{U}
+\newcommand{\MobHess}{\mathbf{A}}         
+\newcommand{\MobHessc}{A}         
+\newcommand{\NIDcoeff}{B}         
+\newcommand{\NID}{\mathbf{B}}         
+\newcommand{\NIDcorr}{\gamma}         
+\newcommand{\qsaddle}{\hat{q}}         
+\newcommand{\dU}{\Delta U}         
+\newcommand{\Ansatz}{\zeta}         
+\newcommand{\curv}{\gamma}         
+
+
+%%BASEPAIRING QUANTITIES
+\newcommand{\Tm}{T_m}	%melting temperature
+\newcommand{\fc}{{f_c}}           % lower (thermodynamic) critical force
+\newcommand{\fd}{{f^*}}           % upper (dynamic) critical force 
+\newcommand{\tfc}{\tilde{f}_c}
+\newcommand{\lss}{{\ell_{\rm s}}}   % single strand base length 
+\newcommand{\lds}{{\ell_{\rm d}}}   % double strand base length 
+\newcommand{\tss}{{\bar{\ell}_{\rm s}}}   % effective ss base length 
+\newcommand{\tds}{{\bar{\ell}_{\rm d}}}   % effective ds base length 
+\newcommand{\eps}{{\varepsilon_{\rm b}}}   % binding energy per basepair 
+\newcommand{\be}{\varepsilon_b}
+\newcommand{\El}{{E_{\ell}}}        % loop cost function
+\newcommand{\Elh}{{\hat{E}_{\ell}}}        % loop cost function
+\newcommand{\Eini}{{\varepsilon_{\ell}}}  % loop initiation cost
+\newcommand{\cS}{{\cal S}}        % set of all basepairs in structure
+\newcommand{\nr}{{m}}               % number of nucleotides per repeat unit 
+\newcommand{\bss}{b_{\rm s}}   % Boltzmann for stretched single strand 
+\newcommand{\bds}{b_{\rm d}}   % Boltzmann for stretched double strand 
+\newcommand{\Zh}{\hat{Z}}       % z-transform of partition function 
+\newcommand{\Wh}{\hat{W}}       % z-transform of closed partition function 
+\newcommand{\Fh}{\hat{F}}       % z-transform of single stranded weight
+\newcommand{\zc}{{z^{*}}}       % z-transform of partition function 
+\newcommand{\Tr}{\tau}   % rupture time 
+\newcommand{\PD}{{\cal P}}      % probability density 
+\newcommand{\mrt}{\langle \tau \rangle} %mean rupture time
+\newcommand{\mt}{\langle \tau \rangle}
+\newcommand{\xf}{{x^*}}     % critical y fugacity
+\newcommand{\yf}{{y^*}}     % critical y fugacity
+\newcommand{\ebs}{{\delta_{\rm s}}}   % boltzmann factor ss base length 
+\newcommand{\ebd}{{\delta_{\rm d}}}   % boltzmann factor ds base length 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition der Kopfzeile %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancyplain}
+\renewcommand{\chaptermark}[1]%
+         {\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]%
+         {\markright{\thesection\ #1}}
+\lhead[\fancyplain{}{\bfseries\thepage}]%
+    {\fancyplain{}{\bfseries\rightmark}}
+\rhead[\fancyplain{}{\bfseries\leftmark}]%
+    {\fancyplain{}{\bfseries\thepage}}
+\cfoot{}
+
+\makeglossary
+\renewcommand{\nomname}{Glossary}
+\renewcommand{\nomentryend}{.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Definition des Deckblattes und der Titelseite  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\LMUTitle}[9]{
+  \thispagestyle{empty}
+  \vspace*{\stretch{1}}
+  {\parindent0cm
+   \rule{\linewidth}{.7ex}}
+  \begin{flushright}
+
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\Huge
+    #1\\
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\large
+    #2
+    \vspace*{\stretch{1}}
+  \end{flushright}
+  \rule{\linewidth}{.7ex}
+  \vspace*{\stretch{5}}
+  \begin{center}
+    \includegraphics[width=2in]{siegel}
+  \end{center}
+  \vspace*{\stretch{1}}
+  \begin{center}\sffamily\LARGE{#5}\end{center}
+  \newpage
+  \thispagestyle{empty}
+
+  \cleardoublepage
+  \thispagestyle{empty}
+
+  \vspace*{\stretch{1}}
+  {\parindent0cm
+  \rule{\linewidth}{.7ex}}
+  \begin{flushright}
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\Huge
+    #1\\
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\large
+    #2
+    \vspace*{\stretch{1}}
+  \end{flushright}
+  \rule{\linewidth}{.7ex}
+
+  \vspace*{\stretch{3}}
+  \begin{center}
+    \Large Dissertation\\
+    \Large an der #4\\
+    \Large der Ludwig--Maximilians--Universit\"at\\
+    \Large M\"unchen\\
+    \vspace*{\stretch{1}}
+    \Large vorgelegt von\\
+    \Large #2\\
+    \Large aus #3\\
+    \vspace*{\stretch{2}}
+    \Large M\"unchen, den #6
+  \end{center}
+
+  \newpage
+  \thispagestyle{empty}
+
+  \vspace*{\stretch{1}}
+
+  \begin{flushleft}
+    \large Erstgutachter:  #7 \\[1mm]
+    \large Zweitgutachter: #8 \\[1mm]
+    \large Tag der m\"undlichen Pr\"ufung: #9\\
+  \end{flushleft}
+
+  \cleardoublepage
+}
+
+\hypersetup{
+pdftitle={Dynamics Aspects of DNA},
+pdfauthor={Richard Neher}
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Beginn des Dokuments  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{unsrtnat}
+
+\begin{document}
+
+  \frontmatter
+
+
+  \LMUTitle
+      {Dynamic aspects of DNA \\
+       \large{DNA-slippage and nucleosome dynamics}}               % Titel der Arbeit
+      {Richard Neher}                       % Vor- und Nachname des Autors
+      {G\"ottingen}                             % Geburtsort des Autors
+      {Fakult\"at f\"ur Physik}                         % Name der Fakultaet
+      {M\"unchen 2007}                          % Ort und Jahr der Erstellung
+      {17. April 2007}                            % Tag der Abgabe
+      {Prof. Dr. Erwin Frey}                          % Name des Erstgutachters
+      {Prof. Dr. Ulrich Gerland}                         % Name des Zweitgutachters
+      {16.05.2007}                         % Datum der muendlichen Pruefung
+
+
+  \tableofcontents
+  \markboth{Table of contents}{Table of contents}
+
+
+  \listoffigures
+  \markboth{List of figures}{List of figures}
+
+
+  %\listoftables
+  %\markboth{List of tables}{List of tables}
+  %\cleardoublepage
+
+
+ \markboth{Resume -- German}{Resume -- German}
+ \include{zusammenfassung}
+ \markboth{Abstract}{Abstract}
+ \include{abstract}
+
+
+  \mainmatter\setcounter{page}{1}
+  \include{chapter_DNA_intro}
+  \include{chapter_DNA_sliding}
+  \include{chapter_Nucleosome}
+	
+  \appendix
+  \include{appendix_Partitionsum}
+  \include{appendix_genLanger}
+  
+  \backmatter
+  \addcontentsline{toc}{chapter}{Bibliography}
+  \bibliography{bibliography}
+  \markboth{}{}
+%Glossary  
+\addcontentsline{toc}{chapter}{Glossary}
+\printglossary[4cm]
+  \markboth{}{}
+%%
+ \include{acknowledgements}
+%%Curriculum vitae
+  \include{cv}
+
+
+\end{document}
